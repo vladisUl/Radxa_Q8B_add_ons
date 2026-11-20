@@ -1,0 +1,16 @@
+[Unit]
+Description=Radxa Dragon Q8B software thermal PI fan controller
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/sbin/q8b-fan --run /etc/q8b-fan.conf
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStopPost=/usr/local/sbin/q8b-fan --restore
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=20
+# Do not silently take over the fan until explicitly enabled by the operator.
+
+[Install]
+WantedBy=multi-user.target
